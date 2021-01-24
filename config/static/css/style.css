@@ -1,0 +1,16 @@
+.index-container {
+    background-color: rgba(155, 155, 155, 0.596);
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.user-field {
+    padding-left: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.user-value {
+    font-weight: 400;
+    text-align: center;
+}

@@ -1,0 +1,36 @@
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href=" {% url "index" %}">
+          {% load static %}
+          <img src="{% static "img/money.svg"%}"  height=40 width=40 class="mx-2">Money exchange
+        </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url "currency_rate" %}">Курс</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "get_orders" %}">Заявки</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url "user_settings" %}" class="nav-link">Привет, <b> {{user.username}} </b></a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url "user_logout" %}" class="nav-link">Выйти</b></a>
+          </li>
+          {% endif %}
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
+      </div>
+    </div>
+  </nav>

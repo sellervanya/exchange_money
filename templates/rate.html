@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Rate {% endblock title  %}
+{% block content %}
+  <div class="container my-5">
+    <h1 class="mt-5 text-center">Курс валют на сегодня</h1>
+    <table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Название</th>
+      <th scope="col">Курс покупки</th>
+      <th scope="col">Курс продажи</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rate in rates %}
+    <tr>
+      <th scope="row">{{rate.symbol}}</th>
+      <td>{{rate.name}}</td>
+      <td>{{rate.rate_buy}}</td>
+      <td>{{rate.rate_sell}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  </div>
+{% endblock content %}

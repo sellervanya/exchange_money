@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %} Profile {% endblock title %} 
+{% block content %}
+<div class="container index-container mt-5">
+  <div class="row px-1">
+    <div class="col-md-2 col-6 user-field">Логин:</div>
+    <div class="col-md-2 col-6 user-value">{{user.username}}</div>
+    <div class="col-md-2 col-6 user-field">Имя:</div>
+    <div class="col-md-2 col-6 user-value">{{user.first_name}}</div>
+    <div class="col-md-2 col-6 user-field">Фамилия:</div>
+    <div class="col-md-2 col-6 user-value">{{user.last_name}}</div>
+  </div>
+  <hr>
+  <div class="row px-1">
+    <div class="col-md-2 col-6 user-field">Номер документа:</div>
+    <div class="col-md-2 col-6 user-value">{{user.document_id}}</div>
+    <div class="col-md-2 col-6 user-field">Пол:</div>
+    <div class="col-md-2 col-6 user-value">{{user.gender}}</div>
+    <div class="col-md-2 col-6 user-field">Телефон:</div>
+    <div class="col-md-2 col-6 user-value">{{user.phone_number}}</div>
+  </div>
+</div>
+{% endblock content %}

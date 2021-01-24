@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} Заявки {% endblock title  %}
+{% block content %}
+{% include "inc/_ordersmenu.html" %}
+<div class="container">
+  <table class="table table-dark table-bordered text-center">
+    <h1 class="mt-2 text-center">Завявки на обмен валюты</h1>
+    <thead class="text-center">
+      <tr>
+        <th scope="col">Тип операции</th>
+        <th scope="col">Пользователь</th>
+        <th scope="col">Валюта</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">Дата создания заявки</th>
+      </tr>
+    </thead>
+{% for operation in operations %}
+  <tbody>
+    <tr>
+      {% if operation.order.operation_type == "Продажа" %}
+      <td class='text-success'>Продажа
+      {% else %}
+      <td class='text-warning'>Покупка
+      {% endif %}</td>
+      <td>{{operation.order.user.first_name}} {{order.user.last_name}}</td>
+      <td>{{operation.order.currency.name}}</td>
+      <td>{{operation.order.amount}} {{order.currency.symbol}}</td>
+      <td>{{operation.order.date_time}}</td>
+    </tr>
+  </tbody>   
+{% endfor %}
+  </table> 
+</div>
+{% endblock content %}
