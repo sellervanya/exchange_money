@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from . models import Operation
 
 
-def get_orders(request):
+def get_my_orders(request):
     try:
         if (request.user.groups.get(id=3)):
             operations = Operation.get_by_status('crt')
