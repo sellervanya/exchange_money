@@ -1,5 +1,18 @@
-<nav class="nav nav-pills mt-2 bg-dark justify-content-center">
-  <a class="nav-link" href="{% url 'get_my_orders' %}">Мои заявки</a>
-  <a class="nav-link" href="#">Создать заявку</a>
-  <a class="nav-link" href="#">Исполненные заявки</a>
+{% load static %}
+<nav class="navbar justify-content-center navbar-expand-md mt-2 bg-secondary">
+ <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse2" aria-controls="navbarCollapse2" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse2">
+   <ul class="navbar-nav mb-2 mb-md-0 mx-2">
+     <li class="nav-item mx-2">
+    <a class="nav-link text-white-50" href="{% url 'get_my_orders' %}">Мои заявки</a>
+      <li class="nav-item mx-2">
+    <a class="nav-link text-white-50" href="{% url 'add_order' %}">Создать заявку</a>
+      </li>
+      <li class="nav-item mx-2">
+    <a class="nav-link text-white-50" href="{% url 'get_complete_orders' %}">Исполненные заявки</a>
+      </li>
+    </ul>
+  </div>
 </nav>

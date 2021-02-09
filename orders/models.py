@@ -1,9 +1,9 @@
 from django.db import models
-import django.utils.timezone
+
 
 TYPE_STATUS = (
-    ('Покупка', 'Покупка'),
-    ('Продажа', 'Продажа'),
+    ('Buy', 'Покупка'),
+    ('Sell', 'Продажа'),
 )
 
 
@@ -11,28 +11,33 @@ class Order(models.Model):
     ''' Модель отвечающая за создание заявки на операцию с валютой'''
     user = models.ForeignKey(
         'users.User',
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True,
+        verbose_name='Пользователь'
         )
 
     currency = models.ForeignKey(
         'currency.Currency',
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True,
+        verbose_name='Валюта'
         )
 
-    amount = models.PositiveIntegerField()
-    date_time = models.DateTimeField(
-        default=django.utils.timezone.now,
-        editable=False)
-
+    amount = models.PositiveIntegerField(
+        verbose_name='Сумма',
+        )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False, verbose_name='Дата заявки'
+        )
     operation_type = models.CharField(
         max_length=10,
-        choices=TYPE_STATUS)
+        choices=TYPE_STATUS, verbose_name='Тип операции'
+        )
 
     def __str__(self):
         return f'''User:{self.user}|
                     Amount:{self.amount}|
                     Currency:{self.currency.short_name}|
-                    DateTime:{self.date_time}'''
+                    DateTime:{self.created_at}'''
 
     class Meta():
         verbose_name = 'Заказ'
@@ -40,10 +45,10 @@ class Order(models.Model):
 
 
 OPERATION_STATUS = (
-    ('created', 'создан'),
-    ('accept', 'подтвержден'),
-    ('decilne', 'отклонен'),
-    ('wait', 'в ожидании'),
+    ('created', 'Создана'),
+    ('accept', 'Исполнена'),
+    ('decilne', 'Отклонена'),
+    ('wait', 'В ожидании'),
 )
 
 
@@ -51,28 +56,28 @@ class Operation(models.Model):
     '''Модель отвечающая за хранение информации об операции'''
     order = models.OneToOneField(
         Order,
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.CASCADE,
+        verbose_name='Заказ'
         )
 
     operator = models.ForeignKey(
         'users.User',
-        on_delete=models.SET_NULL, null=True
+        on_delete=models.SET_NULL, null=True,
+        verbose_name='Оператор'
         )
 
-    currency = models.ForeignKey(
-        'currency.Currency',
-        on_delete=models.SET_NULL, null=True
+    rate = models.PositiveIntegerField(verbose_name='Курс валюты')
+
+    update_at = models.DateTimeField(
+        auto_now=True,
+        editable=False,
+        verbose_name='Дата обработки заявки'
         )
-
-    rate = models.PositiveIntegerField()
-
-    date_time = models.DateTimeField(
-        default=django.utils.timezone.now,
-        editable=False)
 
     status = models.CharField(
         choices=OPERATION_STATUS,
-        default=0, max_length=20
+        auto_created='created', max_length=20,
+        verbose_name='Статус операции'
         )
 
     def __str__(self):
@@ -85,10 +90,6 @@ class Operation(models.Model):
     @classmethod
     def get_by_status(cls, status_str: str):
         return cls.objects.filter(status=status_str)
-
-    @classmethod
-    def get_by_user(cls, userid: str):
-        return cls.objects.filter(order=userid)
 
     class Meta():
         verbose_name = 'Операция'

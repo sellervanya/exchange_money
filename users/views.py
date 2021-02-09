@@ -1,16 +1,43 @@
-from django.shortcuts import redirect, render, get_object_or_404
-from django.http import Http404
-from django.contrib.auth import logout
+from django.shortcuts import redirect, render
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
+
+from .forms import SignUpForm, SignInForm
 
 
+@login_required
 def user_settings(request):
-    if request.user.is_authenticated:
-        return render(request, "profile.html")
-    else:
-        raise Http404('Your\'e is not authorized user')
+    return render(request, "users/profile.html")
 
 
+@login_required
 def user_logout(request):
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
     return redirect('index')
+
+
+def signup(request):
+    form = SignUpForm()
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            my_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=my_password)
+            login(request, user)
+            return redirect('index')
+    return render(request, 'users/signup.html', {'form': form})
+
+
+def signin(request):
+    form = SignInForm()
+    if request.method == 'POST':
+        form = SignInForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            my_password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=my_password)
+            login(request, user)
+            return redirect('index')
+    return render(request, 'users/signin.html', {'form': form})

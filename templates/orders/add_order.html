@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Добавить заявку {% endblock title  %}
+{% block content %}
+{% include "inc/_ordersmenu.html" %}
+<h2 class="mt-4 text-center">Добавление заявки</h2>
+<form method="POST">
+  {% csrf_token %}
+  <div class="container mt-3 bg-gradient bg-light border border-secondary text-center">
+      {% for field in form %}
+    <div class="form-group">
+      <label>{{field.label_tag}}</label>
+      {{field}}
+    
+      {% endfor %}
+      <label>
+        <label for="id_summ">Итого:</label>
+      </label>
+      <input id="id_summ"  class="form-control" type="text" value="0" disabled></input>
+    </div>
+      <button type="submit" class="btn btn-secondary my-2">Создать заявку</button>
+  </div>
+</form>
+<script>;
+var global = 0;
+function result()
+//Получаем курс валют по API, расчитваем итог
+{
+  let oper_type = id_operation_type.value;
+  let amount = id_amount.value;
+  let currency_id = id_currency.value;
+  let request = new XMLHttpRequest();
+  let url = "/rate/" + currency_id;
+  let params = "";
+  request.responseType =	"json";
+  request.open("GET", url, true);
+  request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  request.send(params);
+  request.addEventListener("readystatechange", () => {
+  
+      if (request.readyState === 4 && request.status === 200) {
+        global = request.response;
+    }
+  });
+  if (amount && oper_type && currency_id) {
+    if (oper_type == 'Sell'){
+      return (global.rate_sell * amount).toFixed(2);
+    } else {
+      return (global.rate_buy * amount).toFixed(2);
+    }
+  }
+  return 0
+}
+ 
+</script>
+{% endblock content %}

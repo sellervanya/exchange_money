@@ -1,0 +1,75 @@
+{% extends 'base.html' %} 
+{% block title %} Регистрация {% endblock %}
+{% block content %}
+<h2 class="text-center mt-4">Регистрация пользователя</h1>
+<div class="container mt-3">
+  <div class="form-group px-3 bg-gradient bg-light border border-secondary">
+    <form method="POST">
+      {% csrf_token %} 
+      <div class="row">
+        <h4 class="text-center">Личные данные</h4>
+        <hr>
+        <div class="col-6">
+          <b>{{ form.first_name.label_tag }}</b>
+          {{ form.first_name}}
+          <small class="text-danger">{{ form.first_name.errors}}</small>
+        </div>
+        <div class="col-6">
+            <b>{{ form.last_name.label_tag }}</b>
+            {{ form.last_name}}
+            <small class="text-danger">{{ form.last_name.errors}}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <b>{{ form.gender.label_tag }}</b>
+          {{ form.gender}}
+          <small class="text-danger">{{ form.gender.errors}}</small>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col-6">
+          <b>{{ form.document_id.label_tag }}</b>
+          {{ form.document_id}}
+          <small class="text-danger">{{ form.document_id.errors}}</small>
+        </div>
+        <div class="col-6">
+            <b>{{ form.phone_number.label_tag }}</b>
+            {{ form.phone_number}}
+            <small class="text-danger">{{ form.phone_number.errors}}</small>
+        </div>
+      </div>
+       <div class="row">
+        <h4 class="text-center">Данные учетной записи</h4>
+        <hr>
+        <div class="col-6">
+          <b>{{ form.username.label_tag }}</b>
+          {{ form.username}}
+          <small class="text-danger">{{ form.username.errors}}</small>
+        </div>
+        <div class="col-6">
+            <b>{{ form.email.label_tag }}</b>
+            {{ form.email}}
+           <small class="text-danger">{{ form.email.errors}}</small>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col-6">
+          <b>{{ form.password1.label_tag }}</b>
+          {{ form.password1}}
+          <small class="text-danger">{{ form.password1.errors}}</small>
+        </div>
+        <div class="col-6">
+           <b> {{ form.password2.label_tag }}</b>
+            {{ form.password2}}
+            <small class="text-danger">{{ form.password2.errors}}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center my-3">
+          <button type="submit" class="btn btn-secondary">Регистрация</button>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
