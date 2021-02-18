@@ -22,7 +22,7 @@ class CustomOperationAdmin(admin.ModelAdmin):
         'rate', 'update_at', 'status',
         )
 
-    list_display_links = ('id', )
+    list_display_links = ('id',)
     ordering = ('pk',)
 
 

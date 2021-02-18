@@ -17,12 +17,19 @@
           <li class="nav-item mx-2">
             <a class="nav-link" href="{% url "currency_rate" %}">Курс валют</a>
           </li>
-          {% if user.is_authenticated %}
+          {% if perms.orders.add_order %}
           <li class="nav-item mx-2">
             <a class="nav-link" href="{% url "get_my_orders" %}">Заявки</a>
           </li>
+          {% endif %}
+          {% if perms.orders.change_operation %}
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="{% url "get_new_operations" %}">Операции</a>
+          </li>
+          {% endif %}
         </ul>
         <ul class="navbar-nav ms-auto mb-2 mb-md-0 mx-2">
+          {% if user.is_authenticated %}
           <li class="nav-item mx-2">
             <a href="{% url "user_settings" %}" class="nav-link">Привет, <b> {{user.username}} </b></a>
           </li>

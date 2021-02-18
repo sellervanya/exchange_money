@@ -22,9 +22,9 @@
       {% else %}
       <th class='text-danger'>Покупка
       {% endif %}</th>
-      <td>{{operation.status}}</td>
+      <td>{{operation.get_status_display}}</td>
       <td>{{operation.order.currency.name}}</td>
-      <td>{{operation.order.amount}} {{order.currency.symbol}}</td>
+      <td>{{operation.order.amount}} {{operation.order.currency.symbol}}</td>
       <td>{{operation.order.created_at}}</td>
     </tr>
   </tbody>   

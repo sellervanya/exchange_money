@@ -69,3 +69,20 @@ class SignInForm(AuthenticationForm):
         max_length=64, label='Пароль',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
         )
+
+
+class UserForm(forms.ModelForm):
+
+    password = forms.CharField(
+        max_length=64, label='Текущий пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        )
+    forms.EmailInput
+
+    class Meta:
+        model = User
+        fields = ('email', )
+        widgets = {
+            'email': forms.EmailInput(
+                attrs={'class': 'form-control'})
+            }

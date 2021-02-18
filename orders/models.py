@@ -6,9 +6,16 @@ TYPE_STATUS = (
     ('Sell', 'Продажа'),
 )
 
+OPERATION_STATUS = (
+    ('created', 'Создана'),
+    ('accept', 'Исполнена'),
+    ('decilne', 'Отклонена'),
+    ('wait', 'В ожидании'),
+)
+
 
 class Order(models.Model):
-    ''' Модель отвечающая за создание заявки на операцию с валютой'''
+    ''' Модель отвечающая за создание заявки на операцию с валютой.'''
     user = models.ForeignKey(
         'users.User',
         on_delete=models.SET_NULL, null=True,
@@ -24,36 +31,28 @@ class Order(models.Model):
     amount = models.PositiveIntegerField(
         verbose_name='Сумма',
         )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False, verbose_name='Дата заявки'
         )
+
     operation_type = models.CharField(
         max_length=10,
         choices=TYPE_STATUS, verbose_name='Тип операции'
         )
 
     def __str__(self):
-        return f'''User:{self.user}|
-                    Amount:{self.amount}|
-                    Currency:{self.currency.short_name}|
-                    DateTime:{self.created_at}'''
+        datetime = self.created_at.strftime("%d.%m.%y %H:%M")
+        return f'Заказ № {self.pk } от {datetime}'
 
     class Meta():
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
 
-OPERATION_STATUS = (
-    ('created', 'Создана'),
-    ('accept', 'Исполнена'),
-    ('decilne', 'Отклонена'),
-    ('wait', 'В ожидании'),
-)
-
-
 class Operation(models.Model):
-    '''Модель отвечающая за хранение информации об операции'''
+    '''Модель отвечающая за хранение информации об операции.'''
     order = models.OneToOneField(
         Order,
         on_delete=models.CASCADE,
@@ -66,7 +65,9 @@ class Operation(models.Model):
         verbose_name='Оператор'
         )
 
-    rate = models.PositiveIntegerField(verbose_name='Курс валюты')
+    rate = models.PositiveIntegerField(
+        verbose_name='Курс валюты'
+        )
 
     update_at = models.DateTimeField(
         auto_now=True,
@@ -81,11 +82,7 @@ class Operation(models.Model):
         )
 
     def __str__(self):
-        return f'''Operation: №{self.id}|
-                Order: №{self.order.id}|
-                User: {self.order.user.username}|
-                Ammount: {self.order.amount}|
-                {self.order.currency.name}'''
+        return f'Операция №{self.id} по заказу {self.order.pk}'
 
     @classmethod
     def get_by_status(cls, status_str: str):

@@ -1,6 +1,5 @@
 from django import forms
-
-from .models import Order
+from .models import Operation, Order
 
 
 class OrderForm(forms.ModelForm):
@@ -22,4 +21,15 @@ class OrderForm(forms.ModelForm):
                     'class': 'form-control',
                     'onchange': 'id_summ.value=result()'
                     }),
+        }
+
+
+class OperationForm(forms.ModelForm):
+    class Meta():
+        model = Operation
+        fields = ('status',)
+        widgets = {
+            'status': forms.Select(attrs={
+                    'class': 'form-control',
+            })
         }

@@ -7,17 +7,18 @@
   <table class="table mt-3 table-secondary table-bordered text-center">
     <thead class="text-center">
       <tr>
-        <th scope="col">Тип операции:</th>
-        <th scope="col">Статус:</th>
-        <th scope="col">Валюта:</th>
-        <th scope="col">Курс:</th>
-        <th scope="col">Сумма обмена:</th>
         <th scope="col">Дата создания заявки:</th>
+        <th scope="col">Тип операции:</th>
+        <th scope="col">Валюта:</th>
+        <th scope="col">Сумма обмена:</th>
+        <th scope="col">Курс:</th>
+        <th scope="col">Статус заявки:</th>
       </tr>
     </thead>
 {% for operation in operations %}
   <tbody>
     <tr>
+      <td>{{operation.order.created_at}}</td>
       <th class=
       {% if operation.order.operation_type == "Sell" %}
       'text-success'
@@ -25,11 +26,10 @@
       'text-danger'
       {% endif %}
       >{{ operation.order.get_operation_type_display }}</th>
-      <td>{{operation.get_status_display}}</td>
       <td>{{operation.order.currency.name}}</td>
-      <td>{{operation.rate}} ₽</td>
       <td>{{operation.order.amount}} {{operation.order.currency.symbol}}</td>
-      <td>{{operation.order.created_at}}</td>
+      <td>{{operation.rate}} ₽</td>
+      <td>{{operation.get_status_display}}</td>
     </tr>
   </tbody>   
 {% endfor %}

@@ -22,6 +22,11 @@ class User(AbstractUser):
         message="Некорректный номер телефона"
         )
 
+    document_id_regex = RegexValidator(
+        regex=r'^\d{7,15}$',
+        message="Некорректный номер документа (7-15 цифр)"
+        )
+
     first_name = models.CharField(
         verbose_name='Имя',
         max_length=20, blank=False,
@@ -41,6 +46,7 @@ class User(AbstractUser):
         )
 
     document_id = models.CharField(
+        validators=(document_id_regex,),
         verbose_name='Номер документа',
         unique=True, max_length=20
         )

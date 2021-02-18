@@ -1,22 +1,16 @@
-{% extends "base.html" %} {% block title %} Profile {% endblock title %} 
+{% extends "base.html" %} {% block title %} Профиль {{ user.username }} {% endblock title %} 
 {% block content %}
-<div class="container index-container mt-5">
-  <div class="row px-1">
-    <div class="col-md-2 col-6 user-field">Логин:</div>
-    <div class="col-md-2 col-6 user-value">{{user.username}}</div>
-    <div class="col-md-2 col-6 user-field">Имя:</div>
-    <div class="col-md-2 col-6 user-value">{{user.first_name}}</div>
-    <div class="col-md-2 col-6 user-field">Фамилия:</div>
-    <div class="col-md-2 col-6 user-value">{{user.last_name}}</div>
+<h2 class="mt-4 text-center">Профиль пользователя {{ user.username }}</h2>
+<form method="POST">
+  {% csrf_token %}
+  <div class="container mt-3 bg-gradient bg-light border border-secondary text-center">
+      {% for field in form %}
+    <div class="form-group">
+      <label>{{field.label_tag}}</label>
+      {{field}}
+    
+      {% endfor %}
+      <button type="submit" class="btn btn-secondary my-2">Применить изменения</button>
   </div>
-  <hr>
-  <div class="row px-1">
-    <div class="col-md-2 col-6 user-field">Номер документа:</div>
-    <div class="col-md-2 col-6 user-value">{{user.document_id}}</div>
-    <div class="col-md-2 col-6 user-field">Пол:</div>
-    <div class="col-md-2 col-6 user-value">{{user.gender}}</div>
-    <div class="col-md-2 col-6 user-field">Телефон:</div>
-    <div class="col-md-2 col-6 user-value">{{user.phone_number}}</div>
-  </div>
-</div>
+</form>
 {% endblock content %}

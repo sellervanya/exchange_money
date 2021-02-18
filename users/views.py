@@ -2,12 +2,24 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from .forms import SignUpForm, SignInForm
+from .forms import SignUpForm, SignInForm, UserForm
 
 
 @login_required
 def user_settings(request):
-    return render(request, "users/profile.html")
+    msg = 'Your currently email'
+    user = request.user
+    form = UserForm(instance=user, initial={'password': None})
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            if authenticate(username=user.username, password=password):
+                form.save()
+                msg = f'You update your e-mail on {form.cleaned_data["email"]}'
+            else:
+                msg = 'Poshel von'
+    return render(request, "users/profile.html", context={'form': form, 'msg': msg})
 
 
 @login_required
