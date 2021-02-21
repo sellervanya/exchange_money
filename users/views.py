@@ -7,7 +7,7 @@ from .forms import SignUpForm, SignInForm, UserForm
 
 @login_required
 def user_settings(request):
-    msg = 'Your currently email'
+    msg = ''
     user = request.user
     form = UserForm(instance=user, initial={'password': None})
     if request.method == 'POST':
@@ -16,9 +16,9 @@ def user_settings(request):
             password = form.cleaned_data['password']
             if authenticate(username=user.username, password=password):
                 form.save()
-                msg = f'You update your e-mail on {form.cleaned_data["email"]}'
+                msg = f'Вы обновили информацию профиля'
             else:
-                msg = 'Poshel von'
+                msg = 'Введите верный пароль'
     return render(request, "users/profile.html", context={'form': form, 'msg': msg})
 
 

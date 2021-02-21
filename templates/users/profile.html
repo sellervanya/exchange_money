@@ -3,12 +3,12 @@
 <h2 class="mt-4 text-center">Профиль пользователя {{ user.username }}</h2>
 <form method="POST">
   {% csrf_token %}
-  <div class="container mt-3 bg-gradient bg-light border border-secondary text-center">
+  <div class="container mt-3 bg-gradient bg-light border border-secondary text-center">  
+    <div class='text-danger'> {{ msg }} </div>  
       {% for field in form %}
-    <div class="form-group">
-      <label>{{field.label_tag}}</label>
-      {{field}}
-    
+      <div class="form-group">
+        <label>{{field.label_tag}}</label>
+        {{field}}
       {% endfor %}
       <button type="submit" class="btn btn-secondary my-2">Применить изменения</button>
   </div>

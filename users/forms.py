@@ -81,8 +81,10 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', )
+        fields = ('email', 'phone_number', )
         widgets = {
             'email': forms.EmailInput(
+                attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(
                 attrs={'class': 'form-control'})
             }

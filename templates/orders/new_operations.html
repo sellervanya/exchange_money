@@ -3,6 +3,9 @@
 {% block content %}
 {% include "inc/_operationsmenu.html" %}
 <div class="container">
+  {% if not operations %}
+  <h2 class="mt-4 text-center">Нет новых операций</h2>
+  {% else %}
   <h2 class="mt-4 text-center">Новые заявки на обмен валюты</h2>
   <table class="table mt-3 table-secondary table-bordered text-center">
     <thead class="text-center">
@@ -38,5 +41,6 @@
   </tbody>   
 {% endfor %}
   </table> 
+  {% endif %}
 </div>
 {% endblock content %}
